@@ -1,5 +1,37 @@
 # Setting up Dev Environment
 
+- [Setting up Dev Environment](#setting-up-dev-environment)
+  - [Check that your Windows is up to date:](#check-that-your-windows-is-up-to-date)
+  - [Install WSL](#install-wsl)
+    - [Enable Feature](#enable-feature)
+    - [Enable Virtual Maschine Feature](#enable-virtual-maschine-feature)
+    - [Install updated Linux Kernel](#install-updated-linux-kernel)
+      - [Download](#download)
+      - [Install it!](#install-it)
+    - [Set WSL2 as default](#set-wsl2-as-default)
+    - [Download Ubuntu](#download-ubuntu)
+    - [Install Ubuntu](#install-ubuntu)
+    - [Make sure Ubuntu is set as default and uses WSL2](#make-sure-ubuntu-is-set-as-default-and-uses-wsl2)
+  - [Install VcXsrv](#install-vcxsrv)
+    - [Download and Install](#download-and-install)
+    - [Configure Firewall to allow for:](#configure-firewall-to-allow-for)
+    - [Configure VcXsrv to use the following flags:](#configure-vcxsrv-to-use-the-following-flags)
+  - [Setup Linux](#setup-linux)
+    - [Open WSL](#open-wsl)
+    - [Fix DNS handling](#fix-dns-handling)
+    - [Install OS dependencies](#install-os-dependencies)
+    - [Access wsl file system from windows](#access-wsl-file-system-from-windows)
+    - [Access windows file system from wsl](#access-windows-file-system-from-wsl)
+    - [Switch to your new Home](#switch-to-your-new-home)
+    - [Create a new SSH Key](#create-a-new-ssh-key)
+    - [Configure XServer](#configure-xserver)
+      - [Install/Download Google Chrome](#installdownload-google-chrome)
+      - [Install Google Chrome](#install-google-chrome)
+      - [Test](#test)
+  - [Troubleshooting](#troubleshooting)
+    - [Connection problems](#connection-problems)
+  - [Sources](#sources)
+
 ## Check that your Windows is up to date:
 
 ```powershell
