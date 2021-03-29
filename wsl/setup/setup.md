@@ -1,5 +1,4 @@
-# Setting up Dev Environment
-
+**Table of contents**
 - [Setting up Dev Environment](#setting-up-dev-environment)
   - [Check that your Windows is up to date:](#check-that-your-windows-is-up-to-date)
   - [Install WSL](#install-wsl)
@@ -31,6 +30,8 @@
   - [Troubleshooting](#troubleshooting)
     - [Connection problems](#connection-problems)
   - [Sources](#sources)
+
+# Setting up Dev Environment
 
 ## Check that your Windows is up to date:
 
