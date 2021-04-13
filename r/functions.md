@@ -12,7 +12,7 @@
     - [pbinom(q, size, prob, lower.tail = TRUE)](#pbinomq-size-prob-lowertail--true)
     - [qbinom(p, size, prob, lower.tail = TRUE)](#qbinomp-size-prob-lowertail--true)
     - [rbinom(n, size, prob)](#rbinomn-size-prob)
-  - [Uniformverteilung](#uniformverteilung)
+  - [Uniform distribution](#uniform-distribution)
     - [dunif(x, min = 0, max = 1, log = FALSE)](#dunifx-min--0-max--1-log--false)
     - [punif(q, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)](#punifq-min--0-max--1-lowertail--true-logp--false)
     - [qunif(p, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)](#qunifp-min--0-max--1-lowertail--true-logp--false)
@@ -22,7 +22,7 @@
     - [ppois(q, lambda, lower.tail = TRUE)](#ppoisq-lambda-lowertail--true)
     - [qpois(p, lambda, lower.tail = TRUE)](#qpoisp-lambda-lowertail--true)
     - [rpois(n, lambda)](#rpoisn-lambda)
-  - [Student t-Verteilung](#student-t-verteilung)
+  - [Students t-distribution](#students-t-distribution)
     - [dt(x, df)](#dtx-df)
     - [pt(q, df, lower.tail = TRUE)](#ptq-df-lowertail--true)
     - [qt(p, df, lower.tail = TRUE)](#qtp-df-lowertail--true)
@@ -53,7 +53,7 @@
     - [choose(n, k)](#choosen-k)
     - [sum(x)](#sumx)
     - [hist(x)](#histx)
-    - [stripchard(x)](#stripchardx)
+    - [stripchart(x)](#stripchartx)
   - [Sources](#sources)
 
 Functions that start with:
@@ -260,7 +260,7 @@ rbinom(5, 10, 0.5)
 > [1] 7 6 6 5 6
 ```
 
-## Uniformverteilung
+## Uniform distribution
 
 - **x**: Value in the interval, which I am looking for
 - **min**: Start value of the interval
@@ -435,7 +435,7 @@ rpois(5, lambda)
 > [1] 0 4 2 2 2
 ```
 
-## Student t-Verteilung
+## Students t-distribution
 
 - **df**: Degrees of freedom, usually n-1
 
@@ -876,7 +876,7 @@ sum(data)
 
 The function computes a histogram of the given data values.
 
-### stripchard(x)
+### stripchart(x)
 
 Generates a strip-chart.
 
