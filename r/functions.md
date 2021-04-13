@@ -771,18 +771,6 @@ $prop 1 = \frac{80}{110} = 0.727$
 $prop 2 = \frac{47}{88} = 0.534$
 
 ## Other
-var, cov and cor compute the variance of x and the covariance or correlation of x and y if these are vectors. If x and y are matrices then the covariances (or correlations) between the columns of x and the columns of y are computed.
-cov2cor scales a covariance matrix into the corresponding correlation matrix efficiently.
-Usage
-var(x, y = NULL, na.rm = FALSE, use)
-
-cov(x, y = NULL, use = "everything",
-    method = c("pearson", "kendall", "spearman"))
-
-cor(x, y = NULL, use = "everything",
-    method = c("pearson", "kendall", "spearman"))
-
-cov2cor(V)
 ### median(x)
  
 Calculates the **median** of a dataset `x`.
