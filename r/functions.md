@@ -32,7 +32,6 @@
     - [pf(q, df1, df2, lower.tail = TRUE)](#pfq-df1-df2-lowertail--true)
     - [qf(p, df1, df2, lower.tail = TRUE)](#qfp-df1-df2-lowertail--true)
     - [rf(n, df)](#rfn-df)
-  - [$Chi^2$ Distribution](#chi2-distribution)
   - [t-Test](#t-test)
     - [One-Sample](#one-sample)
     - [Two-Sample](#two-sample)
@@ -64,7 +63,7 @@ Functions that start with:
   - 99.5
 
 ## Important parameters:
-- **lower.tail**: Gibt an, welcher Bereich berechnet wird. Entweder wird der Bereich unter einem Wert berechnet oder der Bereich über Wert.
+- **lower.tail**: Specifies which range is calculated. Either the range below a value is calculated or the range above value. Specifies which area is calculated. 
   - `lower.tail = TRUE` (default): 
     - P(X <= x) is calculated  
   - `lower.tail = FALSE`:
@@ -77,29 +76,29 @@ Functions that start with:
 
 ### dnorm(x, mean = 0, sd = 0)
 
-`x` ist der Wert, für den ich die Wahrscheinlichkeit möchte. Im unteren Beispiel beispiel berechne ich die Wahrscheinlichkeit, dass 0 als Wert herauskommt.
+`x` is the value for which I want the probability. In the example below, I calculate the probability for the value 0.
 
 ```r
 mean <- 0
 sd <- 1
 
-# Gibt mir die Wahrscheinlichkeit, dass GENAU 0 bei einer Standardnormalverteilung herauskommt
+# Gives me the probability of EXACTLY 0 given a standard normal distribution.
 dnorm(0, mean, sd)
 > [1] 0.3989
 ```
 
 ### pnorm(q, mean = 0, sd = 0, lower.tail = TRUE)
 
-`q` ist der Wert bis zu dem wir die Wahrscheinlichkeit berechnen möchten. Man berechnet also die Wahrscheinlichkeit für q oder weniger **P(X <= q)**. Wenn man `lower.tail = FALSE` setzt, dann berechnet man den oberen Teil. Also wird **P(X > q)** berechnet oder auch **1 - P(X <= q)**.
+`q` is the value up to which we want to calculate the probability. So we calculate the probability for q or less **P(X <= q)**. If you set `lower.tail = FALSE`, then you calculate the upper part. So **P(X > q)** is calculated or also **1 - P(X <= q)**.
 
 *lower.tail = TRUE*:
 ```r
 mean <- 170
 sd <- 25
 
-# Gibt mir die Wahrscheinlichkeit, die Größe 170 oder weniger zu haben (-infty, 170). 
-# Da der Wert dem Mean entspricht liegt dieser Wert genau in der Mitte, weshalb 50% herauskommt. 
-# Da 50% der Verteilung links von diesem Wert liegen.
+# Gives me the probability of having size 170 or less (-infty, 170). 
+# Since the value corresponds to the Mean this value lies exactly in the middle, why 50% comes out. 
+# Since 50% of the distribution lies to the left of this value.
 pnorm(170, mean, sd)
 > [1] 0.5
 ```
@@ -108,9 +107,9 @@ pnorm(170, mean, sd)
 mean <- 170
 sd <- 25
 
-# Gibt mir die Wahrscheinlichkeit, größer als 170 sein (X > 170). 
-# Da der Wert dem Mean entspricht liegt dieser Wert genau in der Mitte, weshalb 50% herauskommt. 
-# Da 50% der Verteilung rechts von diesem Wert liegen.
+# Gives me the probability of being greater than 170 (X > 170). 
+# Since the value corresponds to the mean, this value lies exactly in the middle, which is why 50% comes out. 
+# Since 50% of the distribution lies to the right of this value.
 pnorm(170, mean, sd, lower.tail=FALSE)
 > [1] 0.5
 ```
@@ -119,60 +118,60 @@ pnorm(170, mean, sd, lower.tail=FALSE)
 mean <- 170
 sd <- 25
 
-# Gibt mir die Wahrscheinlichkeit, zwischen 150cm und 170cm groß zu sein.
+# Gives me the probability of being between 150cm and 170cm tall
 pnorm(170, mean, sd) - pnorm(150, mean, sd)
 > [1] 0.2881446
 ```
 
-Diese Berechnung ist äquivalent zu dem, wenn ich etwas aus den Tabellen der Normalverteilung herauslese.
+This calculation is equivalent to when something is read out of the normal distribution tables.
 
 **IQR (Inner Quartile Range)**:
 
-- Wert bei 75% der Verteilung - Wert bei 25% der Verteilung
-- $Q_3$ - $Q_1$ (75% - 25%)
+- Value at 75% of the distribution - Value at 25% of the distribution
+- (75% - 25%)
 - ```qnorm(0.75, mean, sd) - qnorm(0.25, mean, sd)```
 
 
 ### qnorm(p, mean = 0, sd = 0, lower.tail = TRUE)
 
-p ist der Wert eines Percentil an dem ich den Wert berechnen möchte. Wenn ich beispielsweise berechnen möchte wie groß 50% der Menschen maximal sind: 
+p is the value of a percentile at which I want to calculate the value. For example, if I want to calculate how tall 50% of the people are: 
 
 *lower.tail = TRUE*:
 ``` r
 mean <- 170
 sd <- 25
 
-# Gibt mir den Wert, wo 50% der Verteilung vorbei sind. 
-# Bei einer Größenverteilung wäre das 170, da dieser Wert der Mean ist und genau in der Mitte liegt.
-# Das heißt 50% der Menschen sind <= 170cm
+# Gives me the value where 50% of the distribution is over. 
+# In a height distribution, this would be 170, since this value is the mean and lies exactly in the middle.
+# That is 50% of the people are <= 170cm
 qnorm(0.5, mean, sd)
 > [1] 170
 ```
-Das liefert mir den Wert wenn ich bei der Verteilung von links zu schauen beginne. Also von links, wo sind 50% der Verteilung vorbei.
+This gives me the value when I look at the distribution from the left.
 
-Wenn ich mit `lower.tail = FALSE` arbeite, dann beginne ich bei der Verteilung von rechts zu schauen. Also von rechts weg wo 60% der Verteilung vorbei sind.
+If I work with `lower.tail = FALSE`, then I start looking at the distribution from the right. 
 *lower.tail = FALSE*:
 ``` r
 mean <- 170
 sd <- 25
 
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
-# Bei einer Größenverteilung wäre das 176.3337. Das heißt 60% der Menschen sind <= 170cm
+# Gives me the value where 60% of the distribution is over. 
+# With a height distribution this would be 176.3337. That is 60% of the people are <= 170cm
 qnorm(0.6, mean, sd, lower.tail=TRUE)
 > [1] 176.3337
 
-# Wir schauen bei der Verteilung von rechts aus schauen, wo 60% der Verteilung vorbei sind. 
-# Dieses Ergebnis wäre gleich zu der Berechnung von ich von links aus 40% schaue.
+# We look at the distribution from the right look where 60% of the distribution is over. 
+# This result would be equal to the calculation of I look from the left 40%.
 qnorm(0.6, mean, sd, lower.tail=FALSE)
 > [1] 163.6663
 
-# Gleiches Ergebnis wie im oberen Beispiel, da wir von links weg 40% schauen. 
-# Oben haben wir von rechts weg 60% geschaut, was ja gleich ist zu den 40% von links.
+# The same result as in the example above, because we look from the left 40% away. 
+# Above we looked from the right 60% away, which is the same as the 40% from the left.
 qnorm(0.4, mean, sd)
 > [1] 163.6663
 ```
 
-Diese Berechnung wäre das verkehrt herum herauslesen aus den Tabellen der Standardnormalverteilungen. Also aus den Prozenten den Wert heraulesen.
+This calculation would be to read out the tables of the standard normal distributions upside down. So read out the value from the percentages.
 
 ### rnorm(n, mean = 0, sd = 1)
 
@@ -193,32 +192,32 @@ rnorm(5, mean, sd)
 
 ## Binomial distribution
 
-- **x**: Anzahl der erfolgreichen Versuche für die wir die Wahrscheinlichkeit suchen
-- **size**: Insgesamte Anzahl der Versuche
-- **prob**: Wahrscheinlichkeit für einen erfolgreichen Versucht
+- **x**: Number of successful attempts for which we are looking for the probability
+- **size**: Number of successful attempts for which we are looking for the probability
+- **prob**: Probability for a successful attempt
 
 ### dbinom(x, size, prob)
 
-x ist die Anzahl der erfolgreichen Versuche für die wir die Wahrscheinlichkeit suchen. Mit dieser Funktion berechne ich den Wert einer PMF an der Stelle x. Im unteren Beispiel berechne ich die Wahrscheinlichkeit, bei 10 Münzwürfen genau 5 Köpfe zu bekommen.
+x is the number of successful trials for which we are looking for the probability. I use this function to calculate the value of a PMF at location x. In the example below, I calculate the probability of getting exactly 5 heads in 10 coin tosses.
 
 ```r
 n <- 10
 prob <- 1/2
 
-# WSK bei 10 Würfen genau 5 Köpfe zu bekommen mit einer WSK 50%
+# Probability to get exactly 5 heads in 10 throws with a probability of 50%.
 dbinom(5, n, prob)
 > [1] 0.2460938
 ```
 ### pbinom(q, size, prob, lower.tail = TRUE)
 
-`q` ist der Wert bis zu dem wir die Wahrscheinlichkeit berechnen möchten. Man berechnet also die Wahrscheinlichkeit für q oder weniger **P(X <= q)**. Wenn man `lower.tail = FALSE` setzt, dann berechnet man den oberen Teil. Also wird **P(X > q)** berechnet oder auch **1 - P(X <= q)**.
+`q` is the value up to which we want to calculate the probability. So we calculate the probability for q or less **P(X <= q)**. If you set `lower.tail = FALSE`, then you calculate the upper part. So **P(X > q)** is calculated or also **1 - P(X <= q)**.
 
 *lower.tail = TRUE*:
 ```r
 n <- 10
 prob <- 1/2
 
-# Gibt mir die Wahrscheinlichkeit 5 oder weniger Köpfe zu werfen.
+# Gives me the probability of throwing 5 or less heads.
 pbinom(5, n, prob)
 > [1] 0.6230469
 ```
@@ -227,23 +226,23 @@ pbinom(5, n, prob)
 n <- 10
 prob <- 1/2
 
-# Gibt mir die Wahrscheinlichkeit mehr als 5 Köpfe zu werfen. 
-# Ist genau die Gegenwahrscheinlichlkeit zu oben.
+# Gives me the probability of throwing more than 5 heads. 
+# Is exactly the opposite probability to the example above.
 pbinom(5, n, prob)
 > [1] 0.3769531
 ```
 
 ### qbinom(p, size, prob, lower.tail = TRUE)
 
-p ist der Wert eines Percentil an dem ich den Wert berechnen möchte. Wenn ich berechnen möchte, wie viele Köpfe ich mit 60% Wahrscheinlichkeit bekomme.
+p is the value of a percentile at which I want to calculate the value. If I want to calculate how many heads I get with 60% probability.
 
 *lower.tail = TRUE*:
 ``` r
 n <- 10
 prob <- 1/2
 
-# Gibt mir die Anzahl der Köpfe, die mit 50% WSK auftreten. 
-# 5 Köpfe treten mit einer WSK von 50% auf.
+# Gives me the number of heads that occur with 50% probability. 
+# 5 heads occur with a probability of 50%.
 qbinom(0.5, 10, 0.5)
 > [1] 5
 ```
@@ -263,33 +262,33 @@ rbinom(5, 10, 0.5)
 
 ## Uniformverteilung
 
-- **x**: Wert im Intervall für den ich den Wert suche
-- **min**: Startwert des Intervalls
-- **max**: Endwert des Intervalls
+- **x**: Value in the interval, which I am looking for
+- **min**: Start value of the interval
+- **max**: End value of the interval
 
 ### dunif(x, min = 0, max = 1, log = FALSE)
-`x` ist der Wert, für den ich die Wahrscheinlichkeit möchte. Beim unteren Beispiel geht es um ein Intervall von 60 Minuten. Ich berechne die Wahrscheinlichkeit, dass der Zug in der 3 Minute kommt. Die Fläche der Uniformverteilung ist genau 1 und ein Rechteck. Daher ist die Wahrscheinlichkeit für, dass der Zug in einer bestimmten Minute kommt immer gleich, egal welche. Aufsummiert ergeben die WSK dann 1.
+`x` is the value for which I want the probability. The example below is about an interval of 60 minutes. I calculate the probability that the train will arrive in the 3 minute. The area of the uniform distribution is exactly 1 and a rectangle. Therefore, the probability of the train coming in a given minute is always the same, no matter what. Summing up the probability then gives 1.
 
 ```r
 min <- 0
 max <- 60
 
-# Gibt mir die Wahrscheinlichkeit, dass der Zug genau in der dritten Minute kommt. 
-# Die Wahrscheinlichkeit ist für jede Minute gleich
+# Gives me the probability that the train will arrive exactly in the third minute. 
+# The probability is the same for each minute.
 dunif(3, min, max)
 > [1] 0.01666667
 ```
 ### punif(q, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)
 
-`q` ist der Wert bis zu dem wir die Wahrscheinlichkeit berechnen möchten. Man berechnet also die Wahrscheinlichkeit für q oder weniger **P(X <= q)**. Wenn man `lower.tail = FALSE` setzt, dann berechnet man den oberen Teil. Also wird **P(X > q)** berechnet oder auch **1 - P(X <= q)**.
+`q` is the value up to which we want to calculate the probability. So we calculate the probability for q or less **P(X <= q)**. If you set `lower.tail = FALSE`, then you calculate the upper part. So **P(X > q)** is calculated or also **1 - P(X <= q)**.
 
 *lower.tail = TRUE*:
 ```r
 min <- 0
 max <- 60
 
-# Gibt mir die Wahrscheinlichkeit, dass der Zug in den ersten 20 Minuten kommt. 
-# Dazu einfach die WSK für 1 Minute * 20 rechnen.
+# Gives me the probability that the train will arrive in the first 20 minutes. 
+# To do this, simply calculate the probability for 1 minute * 20.
 punif(20, min, max)
 > [1] 0.3333333
 ```
@@ -298,47 +297,46 @@ punif(20, min, max)
 min <- 0
 max <- 60
 
-# Gibt mir die Wahrscheinlichkeit, dass der Zug in den letzten 20 Minuten kommt. 
-# Hier wird vom Wert 40 nach rechts geschaut in der Verteilung
+# Gives me the probability that the train will arrive in the last 20 minutes. 
+# Here is looked from the value 40 to the right in the distribution.
 punif(40, min, max, lower.tail=FALSE)
 > [1] 0.3333333
 ```
 
 ### qunif(p, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)
 
-p ist der Wert eines Percentil an dem ich den Wert berechnen möchte. Hier würden 50% 30 Minuten ergeben, da nach 50% der Verteilung 30 Minuten vergangen sind
+p is the value of a percentile at which I want to calculate the value. Here 50% would give 30 minutes, because after 50% of the distribution 30 minutes have passed.
 
 *lower.tail = TRUE*:
 ``` r
 min <- 0
 max <- 60
 
-# Gibt mir den Wert, wo 50% der Verteilung vorbei sind. 
-# Bei einer Stunde wären das 30 Minuten
+# Gives me the value where 50% of the distribution is over. 
+# For one hour, that would be 30 minutes
 qunif(0.5, min, max)
 > [1] 170
 ```
-Das liefert mir den Wert wenn ich bei der Verteilung von links zu schauen beginne. Also von links, wo sind 50% der Verteilung vorbei.
+This gives me the value when I start looking at the distribution from the left.
 
-Wenn ich mit `lower.tail = FALSE` arbeite, dann beginne ich bei der Verteilung von rechts zu schauen. Also von rechts weg wo 60% der Verteilung vorbei sind.
+If I work with `lower.tail = FALSE`, then I start to look at the distribution from the right.
 *lower.tail = FALSE*:
 ``` r
 min <- 0
 max <- 60
 
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
-# 36 Minuten sind vorbei
+# Gives me the value where 60% of the distribution is over. 
 qunif(0.6, min, max, lower.tail=TRUE)
 > [1] 36
 
-# Wir schauen bei der Verteilung von rechts aus schauen, wo 60% der Verteilung vorbei sind. 
-# Dieses Ergebnis wäre gleich zu der Berechnung von ich von links aus 40% schaue. 
-# Beide Werte müssen sich insgesamt zu 60 ausgleichen, da so groß das Intervall ist
+# We look at the distribution from the right look where 60% of the distribution is over. 
+# This result would be equal to the calculation of I look from the left 40%. 
+# Both values must balance out to 60 in total, because that's how big the interval is
 qunif(0.6, min, max, lower.tail=FALSE)
 > [1] 24
 
-# Gleiches Ergebnis wie im oberen Beispiel, da wir von links weg 40% schauen. 
-# Oben haben wir von rechts weg 60% geschaut, was ja gleich ist zu den 40% von links.
+# The same result as in the example above, because we look from the left 40% away. 
+# Above we looked from the right 60% away, which is the same as the 40% from the left.
 qnorm(0.4, min, min)
 > [1] 24
 ```
@@ -362,33 +360,33 @@ runif(5, min, max)
 
 ## Poisson distribution
 
-- **lambda**: Wie oft tritt das Event in einem Zeitintervall auf
+- **lambda**: How often the event occurs in a time interval?
 
 ### dpois(x, lambda)
-`x` ist der Wert, für den ich die Wahrscheinlichkeit möchte. Im unteren Beispiel berechne ich die Wahrscheinlichkeit, dass 1 Hurrican in einem Jahr auftritt.
+`x` is the value for which I want the probability. In the example below, I calculate the probability that 1 hurricane occurs in a year.
 
 ```r
 years <- 22
 hurricans <- 27
 
-lambda <- hurricans/years # 1.227 hurricans pro Jahr
+lambda <- hurricans/years # 1.227 hurricans per year
 
-# Gibt mir die Wahrscheinlichkeit, dass GENAU 1 Hurrikan auftritt
+# Gives me the probability that EXACTLY 1 hurricane will occur
 dpois(1, lambda)
 > [1] 0.3597024
 ```
 ### ppois(q, lambda, lower.tail = TRUE)
 
-`q` ist der Wert bis zu dem wir die Wahrscheinlichkeit berechnen möchten. Man berechnet also die Wahrscheinlichkeit für q oder weniger **P(X <= q)**. Wenn man `lower.tail = FALSE` setzt, dann berechnet man den oberen Teil. Also wird **P(X > q)** berechnet oder auch **1 - P(X <= q)**.
+`q` is the value up to which we want to calculate the probability. So we calculate the probability for q or less **P(X <= q)**. If you set `lower.tail = FALSE`, then you calculate the upper part. So **P(X > q)** is calculated or also **1 - P(X <= q)**.
 
 *lower.tail = TRUE*:
 ```r
 years <- 22
 hurricans <- 27
 
-lambda <- hurricans/years # 1.227 hurricans pro Jahr
+lambda <- hurricans/years # 1.227 hurricans per year
 
-# Gibt mir die Wahrscheinlichkeit, dass weniger als 3 Hurrikans in einem Jahr auftreten.
+# Gives me the probability of fewer than 3 hurricanes in a year.
 ppois(2, lambda)
 > [1] 0.8735197
 ```
@@ -397,27 +395,27 @@ ppois(2, lambda)
 years <- 22
 hurricans <- 27
 
-lambda <- hurricans/years # 1.227 hurricans pro Jahr
+lambda <- hurricans/years # 1.227 hurricans per year
 
-# Gibt mir die Wahrscheinlichkeit, dass mehr als 2 Hurrikans in einem Jahr auftreten. 
-# Dies ist natürlich genau die Gegenwahrscheinlichkeit zu weniger als 3 Hurrikans auftreten.
+# Gives me the probability that more than 2 hurricanes will occur in a year. 
+# This is, of course, exactly the opposite probability to less than 3 hurricanes occurring.
 ppois(2, lambda, FALSE)
 > [1] 0.1264803
 ```
 
 ### qpois(p, lambda, lower.tail = TRUE)
 
-p ist der Wert eines Percentil an dem ich den Wert berechnen möchte. Wenn ich beispielsweise berechnen möchte, wie viele Hurrikans mit 99.5% Wahrscheinlichkeit auftreten.
+p is the value of a percentile at which I want to calculate the value. For example, if I want to calculate how many hurricanes occur with 99.5% probability.
 
 *lower.tail = TRUE*:
 ``` r
 years <- 22
 hurricans <- 27
 
-lambda <- hurricans/years # 1.227 hurricans pro Jahr
+lambda <- hurricans/years # 1.227 hurricans per year
 
-# Gibt mir die Anzahl der Hurricans, die mit 99.5% WSK in einem Jahr auftreten. 
-# 5 oder weniger Hurrikans treten mit einer WSK von 99.5% in einem Jahr auf
+# Gives me the number of hurricanes that occur with 99.5% probability in a year. 
+# 5 or less hurricanes occur with a probability of 99.5% in a year
 qpois(0.995, e)
 > [1] 5
 ```
@@ -430,7 +428,7 @@ This function takes `n` samples from the given poisson distribution. Below we ta
 years <- 22
 hurricans <- 27
 
-lambda <- hurricans/years # 1.227 hurricans pro Jahr
+lambda <- hurricans/years # 1.227 hurricans per year
 
 # Returns 5 samples of how many hurricans can occur in one year.
 rpois(5, lambda)
@@ -439,17 +437,17 @@ rpois(5, lambda)
 
 ## Student t-Verteilung
 
-- **df**: Freiheitsgrade, normalerweise n-1
+- **df**: Degrees of freedom, usually n-1
 
 ### dt(x, df)
 
-`x` ist der Wert, für den ich die Wahrscheinlichkeit möchte. Zusäztlich benötige ich im unteren Beispiel die Freiheitsgrade. Diese berechnen sich normalerweise aus der Sample Size - 1. Im unteren Beispiel beispiel berechne ich die Wahrscheinlichkeit, dass 0 als Wert herauskommt.
+`x` is the value for which I want the probability. In addition, I need the degrees of freedom in the example below. These are usually calculated from the sample size - 1. In the example below, I calculate the probability that 0 comes out as the value.
 
 ```r
 mean <- 0
 sd <- 1
 
-# Gibt mir die Wahrscheinlichkeit, dass GENAU 0 bei einer t-Verteilung herauskommt
+# Gives me the probability that EXACTLY 0 comes out in a t-distribution.
 dt(0, 10)
 > [1] 0.3891084
 
@@ -459,36 +457,35 @@ dt(0, 200)
 dnorm(0)
 > [1] 0.3989423
 
-# Wie man sieht nähert sich  die t-Verteilung immer weiter der Normalverteilung an, umso höher die Sample
-# Size ist
+# As you can see, the t-distribution approaches the normal distribution the higher the sample size is.
 ```
 
 ### pt(q, df, lower.tail = TRUE)
 
-`q` ist der Wert bis zu dem wir die Wahrscheinlichkeit berechnen möchten. Man berechnet also die Wahrscheinlichkeit für q oder weniger **P(X <= q)**. Wenn man `lower.tail = FALSE` setzt, dann berechnet man den oberen Teil. Also wird **P(X > q)** berechnet oder auch **1 - P(X <= q)**.
+`q` is the value up to which we want to calculate the probability. So one calculates the probability for q or less **P(X <= q)**. If you set `lower.tail = FALSE`, then you calculate the upper part. So **P(X > q)** is calculated or also **1 - P(X <= q)**.
 
 *lower.tail = TRUE*:
 ```r
-# Gibt mir die Wahrscheinlichkeit, den Wert 1 oder weniger in der Standardnormalverteilung zu haben.
+# Gives me the probability of having the value 1 or less in the standard normal distribution.
 pnorm(1)
 > [1] 0.8413447
 
-# Gibt mir die Wahrscheinlichkeit, den Wert 1 oder weniger zu haben. 
-# Hier sind die 10 Freiheitsgrade zu beachten. 
-# Wie man sieht ist der Wert schon sehr nahe bei dem Wert der Standardnormalverteilung
+# Gives me the probability of having the value 1 or less. 
+# Here the 10 degrees of freedom are to be considered. 
+# As you can see, the value is already very close to the value of the standard normal distribution.
 pt(1, 10)
 > [1] 0.8295534
 
-# Gleiche Berechnung wie oben, aber mit 200 Freiheitsgraden. 
-# Wert ist deutlich näher beim Wert der Standardnormalverteilung.
+# Same calculation as above, but with 200 degrees of freedom. 
+# Value is significantly closer to the value of the standard normal distribution.
 pt(1, 200)
 > [1] 0.8407406
 ```
 
 *lower.tail = FALSE*:
 ```r
-# Gibt mir die Wahrscheinlichkeit, mehr als den Wert 1 zu haben. 
-# Dies ist genau die Gegenwahrscheinlichkeit zu oben.
+# Gives me the probability of having more than the value 1. 
+# This is exactly the opposite probability to above.
 pt(1, 10, lower.tail=FALSE)
 > [1] 0.1592594
 
@@ -498,42 +495,42 @@ pt(1, 200, lower.tail = FALSE)
 
 ### qt(p, df, lower.tail = TRUE)
 
-p ist der Wert eines Percentil an dem ich den Wert berechnen möchte. 
+p is the value of a percentile at which I want to calculate the value. 
 
 *lower.tail = TRUE*:
 ``` r
 
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
+# Gives me the value where 60% of the distribution is over. 
 qnorm(0.6)
 > [1] 0.2533471
 
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
-# Man beachte die 10 Freiheitsgrade. Wert liegt schon sehr nahe bei dem der Standardnormalverteilung
+# Gives me the value where 60% of the distribution is over. 
+# Note the 10 degrees of freedom. Value is already very close to that of the standard normal distribution
 qt(0.6, 10)
 > [1] 0.2601848
 
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
-# Man beachte die 200 Freiheitsgrade.
-# Wert ist noch näher bei der Standardnormalverteilung
+# Gives me the value where 60% of the distribution is over. 
+# Note the 200 degrees of freedom.
+# Value is even closer to the standard normal distribution.
 qt(0.6, 200)
 > [1] 0.2536844
 ```
-Das liefert mir den Wert wenn ich bei der Verteilung von links zu schauen beginne. Also von links, wo sind 60% der Verteilung vorbei.
+This gives me the value when I start looking at the distribution from the left.
 
-Wenn ich mit `lower.tail = FALSE` arbeite, dann beginne ich bei der Verteilung von rechts zu schauen. Also von rechts weg wo 60% der Verteilung vorbei sind.
+If I work with `lower.tail = FALSE`, then I start looking at the distribution from the right. So from the right away where 60% of the distribution is over.
 *lower.tail = FALSE*:
 ``` r
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
+# Gives me the value where 60% of the distribution is over. 
 qt(0.6, 200, lower.tail=TRUE)
 > [1] 0.2536844
 
-# Wir schauen bei der Verteilung von rechts aus, wo 60% der Verteilung vorbei sind. 
-# Dieses Ergebnis wäre gleich zu der Berechnung wenn ich von links aus 40% schaue.
+# We look at the distribution from the right where 60% of the distribution is over. 
+# This result would be equal to the calculation if I look from the left 40%.
 qt(0.6, 200, lower.tail=FALSE)
 > [1] -0.2536844
 
-# Gleiches Ergebnis wie im oberen Beispiel, da wir von links weg 40% schauen. 
-# Oben haben wir von rechts weg 60% geschaut, was ja gleich ist zu den 40% von links.
+# The same result as in the example above, because we look from the left 40% away. 
+# Above we looked from the right 60% away, which is the same as the 40% from the left.
 qt(0.4, 200)
 > [1] -0.2536844
 ```
@@ -553,47 +550,47 @@ rt(5, 20)
 
 ### df(x, df1, df2)
 
-`x` ist der Wert, für den ich die Wahrscheinlichkeit möchte. Zusäztlich benötige ich im unteren Beispiel die Freiheitsgrade. Im unteren Beispiel berechne ich die Wahrscheinlichkeit, dass 0 als Wert herauskommt.
+`x` is the value for which I want the probability. In addition, I need the degrees of freedom in the lower example. In the lower example, I calculate the probability that 0 comes out as the value
 
 ```r
-# Gibt mir die Wahrscheinlichkeit, dass GENAU 1 bei einer f-Verteilung herauskommt
+# Gives me the probability that EXACTLY 1 comes out in an f-distribution
 df(1, 10, 10)
 > [1] 0.6152344
 ```
 
 ### pf(q, df1, df2, lower.tail = TRUE)
 
-`q` ist der Wert bis zu dem wir die Wahrscheinlichkeit berechnen möchten. Man berechnet also die Wahrscheinlichkeit für q oder weniger **P(X <= q)**. Wenn man `lower.tail = FALSE` setzt, dann berechnet man den oberen Teil. Also wird **P(X > q)** berechnet oder auch **1 - P(X <= q)**.
+`q` is the value up to which we want to calculate the probability. So we calculate the probability for q or less **P(X <= q)**. If you set `lower.tail = FALSE`, then you calculate the upper part. So **P(X > q)** is calculated or also **1 - P(X <= q)**.
 
 *lower.tail = TRUE*:
 ```r
-# Gibt mir die Wahrscheinlichkeit, den Wert 2 oder weniger zu haben. 
-# Hier sind die 10 Freiheitsgrade zu beachten. 
+# Gives me the probability of having the value 2 or less. 
+# Here the 10 degrees of freedom are to be considered. 
 pf(1, 10, 10)
 > [1] 0.8551542
 ```
 
 *lower.tail = FALSE*:
 ```r
-# Gibt mir die Wahrscheinlichkeit, mehr als den Wert 2 zu haben. 
-# Dies ist genau die Gegenwahrscheinlichkeit zu oben.
+# Gives me the probability of having more than the value 2. 
+# This is exactly the opposite probability to above.
 pt(2, 10, lower.tail=FALSE)
 > [1] 0.1448458
 ```
 
 ### qf(p, df1, df2, lower.tail = TRUE)
 
-p ist der Wert eines Percentil an dem ich den Wert berechnen möchte. 
+p is the value of a percentile at which I want to calculate the value. 
 
 *lower.tail = TRUE*:
 ``` r
-# Gibt mir den Wert, wo 60% der Verteilung vorbei sind. 
-# Man beachte die 10 Freiheitsgrade.
+# Gives me the value where 60% of the distribution is over. 
+# Note the 10 degrees of freedom.
 qf(0.6, 10, 10)
 > [1] 1.178651
 
 ```
-Das liefert mir den Wert wenn ich bei der Verteilung von links zu schauen beginne. Also von links, wo sind 60% der Verteilung vorbei.
+This gives me the value when I start looking at the distribution from the left. So from the left, where are 60% of the distribution over.
 
 ### rf(n, df)
 
@@ -603,13 +600,6 @@ This function takes `n` samples from the given f-distribution. Below we take 5 s
 rf(5, 10, 10)
 [1] 3.1506333 1.4209381 3.4736313 0.3532966 1.3175930
 ```
-
-## $Chi^2$ Distribution
-
-```r
-qchisq(0.99,2)
-```
-
 
 ## t-Test
 
@@ -778,10 +768,21 @@ sample estimates:
 
 $prop 1 = \frac{80}{110} = 0.727$
 
-$prop 2 = \frac{47}{88} = 0.0.534$
+$prop 2 = \frac{47}{88} = 0.534$
 
 ## Other
+var, cov and cor compute the variance of x and the covariance or correlation of x and y if these are vectors. If x and y are matrices then the covariances (or correlations) between the columns of x and the columns of y are computed.
+cov2cor scales a covariance matrix into the corresponding correlation matrix efficiently.
+Usage
+var(x, y = NULL, na.rm = FALSE, use)
 
+cov(x, y = NULL, use = "everything",
+    method = c("pearson", "kendall", "spearman"))
+
+cor(x, y = NULL, use = "everything",
+    method = c("pearson", "kendall", "spearman"))
+
+cov2cor(V)
 ### median(x)
  
 Calculates the **median** of a dataset `x`.
